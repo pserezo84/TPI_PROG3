@@ -1,6 +1,24 @@
-﻿@model App.Core.Entities.Mail
+﻿@model IEnumerable<App.Core.Entities.Mail>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Bandeja de entrada de usuario</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Asunto</th>
+            <th>Remitente</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mail in Model)
+        {
+            <tr>
+                <td>@mail.Asunto</td>
+                <td>@mail.Remitente_id</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,15 @@
+using App.Core.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using App.Core.Business.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Inyeccion de dependencias
+//builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<MailService, MailService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -12,6 +23,19 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
+//public void ConfigureServices(IServiceCollection services)
+//{
+//    // ...
+
+//    services.AddScoped<IMailService, MailService>();
+
+//    services.AddControllersWithViews();
+//}
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
