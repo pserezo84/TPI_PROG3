@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace App.Core.Entities
 {
-    [Table("dbo.mails_contactos")]
+    [Table("mails_contactos")]
     public class Destinatario
     {
         public int Id { get; set; }
 
-        public string Mail_id { get; set; }
+        public int Mail_id { get; set; }
 
-        public string Contacto_id { get; set;}
+        public int Contacto_id { get; set;}
 
     }
 }

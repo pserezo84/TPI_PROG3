@@ -10,8 +10,9 @@ namespace App.Core.Business.Interfaces
 {
     internal interface IMailService
     {
-        IEnumerable<Mail> GetAllMails();
-        IEnumerable<Mail> GetMailById(int id);
+        IEnumerable<Mail> GetAllMails(int userId);
+        IEnumerable<Mail> SearchString(string textToSearch);
+        IEnumerable<Mail> GetMailRemitenteById(int userId);
         void AddMail(Mail mail);
     }
 }

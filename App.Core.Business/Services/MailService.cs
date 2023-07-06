@@ -8,10 +8,15 @@ namespace App.Core.Business.Services
     {
         private readonly MailRepository _mailRepository;
 
+        public int userId { get; set; }
+
+        
+
 
         public MailService()
         {
             _mailRepository = new MailRepository();
+            this.userId = 1;
         }
 
 
@@ -23,20 +28,29 @@ namespace App.Core.Business.Services
         //    return _mailRepository.Search(textToSearch); ;
         //}
 
-        public IEnumerable<Mail> GetAllMails()
+        public IEnumerable<Mail> GetAllMails(int userId) 
         {
-            return _mailRepository.GetAll();
+            return _mailRepository.GetAll(userId);
         }
 
-        public IEnumerable<Mail> GetMailById(int id)
+        public IEnumerable<Mail> SearchString(string textToSearch)
         {
-            return _mailRepository.GetById(id); ;
+            return _mailRepository.SearchString(textToSearch);
+        }
+
+        public IEnumerable<Mail> GetMailRemitenteById(int userId)
+        {
+            return _mailRepository.GetByRemitenteId(userId); ;
         }
 
         public void AddMail(Mail mail)
         {
             _mailRepository.Add(mail);
         }
+
+        //SearchString
+
+
 
     }
 }

@@ -17,13 +17,13 @@ namespace App.Core.Data
         {
         }
 
-        public List<Mail> Search(string textToSearch)
+        public List<Mail> SearchString(string textToSearch)
         {
 
             using (var context = new MailContext())
             {
                 var query = from m in context.Mails
-                            where m.Asunto.Contains(textToSearch)
+                            where m.Contenido.Contains(textToSearch)
                             select m;
 
                 return query.ToList();
@@ -31,21 +31,30 @@ namespace App.Core.Data
 
         }
 
-        public IEnumerable<Mail> GetAll()
+        public IEnumerable<Mail> GetAll(int id)
         {
             using (var context = new MailContext())
             {
-                return context.Mails.ToList();
-                //return dbContext.Mails.ToList();
+                //return context.Mails.ToList();
+                
+                var query = from d in context.Destinatarios
+                            join m in context.Mails on d.Mail_id equals m.Id into joinedMails
+                            from m in joinedMails.DefaultIfEmpty()
+                            where d.Contacto_id == id
+                            select m;                    
+
+
+                return query.ToList();
+
             }
             
         }
-        public List<Mail> GetById(int id)
+        public List<Mail> GetByRemitenteId(int id)
         {
             using (var context = new MailContext())
             {
                 var query = from m in context.Mails
-                            where m.Id == id
+                            where m.Remitente_id == id
                             select m;   
                 return query.ToList();
             }
