@@ -11,7 +11,9 @@ namespace App.Core.Entities
 
         public string Contenido { get; set; }
 
-        public int Remitente_id { get; set; }       
+        public int Remitente_id { get; set; }
+
+        public DateTime FechaEnvio { get; set; }
 
 
     }

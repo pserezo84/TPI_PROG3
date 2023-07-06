@@ -28,7 +28,7 @@ namespace App.Core.Business.Services
             return _mailRepository.GetAll();
         }
 
-        public Mail GetMailById(int id)
+        public IEnumerable<Mail> GetMailById(int id)
         {
             return _mailRepository.GetById(id); ;
         }

@@ -11,7 +11,7 @@ namespace App.Core.Business.Interfaces
     internal interface IMailService
     {
         IEnumerable<Mail> GetAllMails();
-        Mail GetMailById(int id);
+        IEnumerable<Mail> GetMailById(int id);
         void AddMail(Mail mail);
     }
 }

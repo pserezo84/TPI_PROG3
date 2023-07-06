@@ -40,11 +40,14 @@ namespace App.Core.Data
             }
             
         }
-        public Mail GetById(int id)
+        public List<Mail> GetById(int id)
         {
             using (var context = new MailContext())
             {
-                return dbContext.Mails.Find(id);
+                var query = from m in context.Mails
+                            where m.Id == id
+                            select m;   
+                return query.ToList();
             }
         }
 

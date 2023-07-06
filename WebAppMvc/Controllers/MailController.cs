@@ -15,17 +15,28 @@ namespace WebAppMvc.Controllers
             this.mailService = mailService;
         }
 
-
         public IActionResult Index()
         {
             var mails = mailService.GetAllMails();
             return View(mails);
         }
 
-        public IActionResult bandeja()
+        public IActionResult BandejaDeEntrada()
         {
-           
+            var mails = mailService.GetMailById(1);
+            return View(mails);
+            
+        }
+        public IActionResult ElementosEnviados()
+        {
+
             return View();
+        }
+
+        public IActionResult GetAsunto()
+        {
+            var mails = mailService.GetMailById(4);
+            return View(mails);
         }
     }
 }
