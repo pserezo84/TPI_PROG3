@@ -29,14 +29,15 @@ namespace App.Core.Business.Services
 
         //################################################################//
         //####### Obtener bandeja de entrada por id ######################//
+
         public IEnumerable<Mail> GetEntradaById(int userId) 
         {
-            return _mailRepository.GetEntradaById(userId);
+            return _mailRepository.GetEntradaById(1);
         }
 
         public IPagedList<Mail> GetEntradaById(int userId, int page = 1, int pageSize = 10)
         {
-            var mails = _mailRepository.GetEntradaById(userId);
+            var mails = _mailRepository.GetEntradaById(1);
             return mails.ToPagedList(page, pageSize);
         }
 
@@ -58,7 +59,7 @@ namespace App.Core.Business.Services
         //####### Obtener bandeja de salida por id ######################//
         public IEnumerable<Mail> GetEnviadosById(int userId)
         {
-            return _mailRepository.GetEnviadosById(userId); ;
+            return _mailRepository.GetEnviadosById(1); ;
         }
 
         //################################################################//

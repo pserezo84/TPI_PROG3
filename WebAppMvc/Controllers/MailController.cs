@@ -16,7 +16,7 @@ namespace WebAppMvc.Controllers
         public MailController(MailService mailService)
         {
             this.mailService = mailService;
-            this.userID = 3;
+            this.userID = 2;
         }
 
         public IActionResult Index()
@@ -95,6 +95,8 @@ namespace WebAppMvc.Controllers
             
             var maxId = mailService.GetMaxMailIdByRemitenteId(userID);
 
+            //Aca se debe recorrer si hay mas de un destinatario for del input
+
             var objDestinatario = new Destinatario()
             {
                 Mail_id = maxId,
@@ -102,6 +104,8 @@ namespace WebAppMvc.Controllers
             };
 
             mailService.AddDestinatario(objDestinatario);
+            //aca termina el bucle
+
             return View();
                         
         }
