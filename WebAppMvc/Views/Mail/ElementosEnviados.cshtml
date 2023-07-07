@@ -15,6 +15,14 @@
 </head>
 <body>
     <h1 style="text-align:center;text-decoration:underline">Correos Enviados</h1>
+    <h3>Buscar Mail</h3>
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="get" action="@Url.Action("ElementosEnviados", "Mail")">
+        <div class="input-group">
+            <input class="form-control" type="text" name="textToSearch" placeholder="Ingrese texto a buscar..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+    
     <hr />
 
     <table class="table table-striped table-dark">

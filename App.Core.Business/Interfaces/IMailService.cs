@@ -10,9 +10,12 @@ namespace App.Core.Business.Interfaces
 {
     internal interface IMailService
     {
-        IEnumerable<Mail> GetAllMails(int userId);
+        IEnumerable<Mail> GetEntradaById(int userId);
         IEnumerable<Mail> SearchString(string textToSearch);
-        IEnumerable<Mail> GetMailRemitenteById(int userId);
-        void AddMail(Mail mail);
+        IEnumerable<Mail> SearchStringEnviados(string textToSearch);
+        IEnumerable<Mail> GetEnviadosById(int userId);
+        void AddMail(Mail mail);                
+        int GetMaxMailIdByRemitenteId(int remitenteId);
+        void AddDestinatario(Destinatario destinatario);
     }
 }

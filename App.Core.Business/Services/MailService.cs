@@ -9,9 +9,7 @@ namespace App.Core.Business.Services
         private readonly MailRepository _mailRepository;
 
         public int userId { get; set; }
-
-        
-
+       
 
         public MailService()
         {
@@ -28,28 +26,50 @@ namespace App.Core.Business.Services
         //    return _mailRepository.Search(textToSearch); ;
         //}
 
-        public IEnumerable<Mail> GetAllMails(int userId) 
+        //################################################################//
+        //####### Obtener bandeja de entrada por id ######################//
+        public IEnumerable<Mail> GetEntradaById(int userId) 
         {
-            return _mailRepository.GetAll(userId);
+            return _mailRepository.GetEntradaById(userId);
         }
 
+        //################################################################//
+        //###### Buscar texto en bandeja de entrada ####################//
         public IEnumerable<Mail> SearchString(string textToSearch)
         {
             return _mailRepository.SearchString(textToSearch);
         }
 
-        public IEnumerable<Mail> GetMailRemitenteById(int userId)
+        //################################################################//
+        //###### Buscar texto en bandeja de enviados ####################//
+        public IEnumerable<Mail> SearchStringEnviados(string textToSearch)
         {
-            return _mailRepository.GetByRemitenteId(userId); ;
+            return _mailRepository.SearchStringEnviados(textToSearch);
         }
 
+        //################################################################//
+        //####### Obtener bandeja de salida por id ######################//
+        public IEnumerable<Mail> GetEnviadosById(int userId)
+        {
+            return _mailRepository.GetEnviadosById(userId); ;
+        }
+
+        //################################################################//
+        //############### Agregar nuevo Mail #############################//
         public void AddMail(Mail mail)
         {
-            _mailRepository.Add(mail);
+            _mailRepository.AddMail(mail);
         }
 
-        //SearchString
+        public int GetMaxMailIdByRemitenteId(int remitenteId)
+        {
+            return _mailRepository.GetMaxMailIdByRemitenteId(remitenteId);
+        }
 
+        public void AddDestinatario(Destinatario destinatario)
+        {
+            _mailRepository.AddDestinatario(destinatario);
+        }
 
 
     }

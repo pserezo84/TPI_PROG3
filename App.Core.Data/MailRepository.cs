@@ -1,4 +1,5 @@
 ﻿using App.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
@@ -17,13 +18,14 @@ namespace App.Core.Data
         {
         }
 
+        //#### Metodo para busqueda de Mail por asunto o contenido####//
         public List<Mail> SearchString(string textToSearch)
         {
 
             using (var context = new MailContext())
             {
                 var query = from m in context.Mails
-                            where m.Contenido.Contains(textToSearch)
+                            where m.Contenido.Contains(textToSearch) || m.Asunto.Contains(textToSearch) 
                             select m;
 
                 return query.ToList();
@@ -31,7 +33,21 @@ namespace App.Core.Data
 
         }
 
-        public IEnumerable<Mail> GetAll(int id)
+        public List<Mail> SearchStringEnviados(string textToSearch)
+        {
+
+            using (var context = new MailContext())
+            {
+                var query = from m in context.Mails
+                            where m.Contenido.Contains(textToSearch) || m.Asunto.Contains(textToSearch)
+                            select m;
+
+                return query.ToList();
+            }
+
+        }
+
+        public IEnumerable<Mail> GetEntradaById(int id)
         {
             using (var context = new MailContext())
             {
@@ -49,7 +65,7 @@ namespace App.Core.Data
             }
             
         }
-        public List<Mail> GetByRemitenteId(int id)
+        public List<Mail> GetEnviadosById(int id)
         {
             using (var context = new MailContext())
             {
@@ -60,16 +76,36 @@ namespace App.Core.Data
             }
         }
 
-        public void Add(Mail mail)
+        public void AddMail(Mail mail)
         {
             using (var context = new MailContext())
             {
-                dbContext.Mails.Add(mail);
-                dbContext.SaveChanges();
+                context.Mails.Add(mail);
+                context.SaveChanges();
+            }
+        }
+                
+        public int GetMaxMailIdByRemitenteId(int remitenteId)
+        {
+            using (var context = new MailContext())
+            {
+                var maxId = context.Mails
+                .Where(m => m.Remitente_id == remitenteId)
+                .Max(m => m.Id);
+
+                return maxId;
             }
         }
 
+        public void AddDestinatario(Destinatario destinatario)
+        {
+            using (var context = new MailContext())
+            {
+                context.Destinatarios.Add(destinatario);
+                context.SaveChanges();
+            }
+        }
     }
 
-    
+
 }
