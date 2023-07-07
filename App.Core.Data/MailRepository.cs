@@ -1,5 +1,6 @@
 ﻿using App.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
@@ -47,23 +48,37 @@ namespace App.Core.Data
 
         }
 
-        public IEnumerable<Mail> GetEntradaById(int id)
+        //public IEnumerable<Mail> GetEntradaById(int id)
+        //{
+        //    using (var context = new MailContext())
+        //    {
+        //        //return context.Mails.ToList();
+
+        //        var query = from d in context.Destinatarios
+        //                    join m in context.Mails on d.Mail_id equals m.Id into joinedMails
+        //                    from m in joinedMails.DefaultIfEmpty()
+        //                    where d.Contacto_id == id
+        //                    select m;                    
+
+
+        //        return query.ToList();
+
+        //    }
+
+        //}
+
+        public IPagedList<Mail> GetEntradaById(int id, int page = 1, int pageSize = 10)
         {
             using (var context = new MailContext())
             {
-                //return context.Mails.ToList();
-                
                 var query = from d in context.Destinatarios
                             join m in context.Mails on d.Mail_id equals m.Id into joinedMails
                             from m in joinedMails.DefaultIfEmpty()
                             where d.Contacto_id == id
-                            select m;                    
+                            select m;
 
-
-                return query.ToList();
-
+                return query.ToPagedList(page, pageSize);
             }
-            
         }
         public List<Mail> GetEnviadosById(int id)
         {

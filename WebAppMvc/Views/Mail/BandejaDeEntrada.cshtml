@@ -1,4 +1,4 @@
-﻿@model IEnumerable<App.Core.Entities.Mail>
+﻿@model X.PagedList.IPagedList<App.Core.Entities.Mail>
 
 @{
     ViewData["Title"] = "BandejaEntrada";
@@ -8,29 +8,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-
+    <!-- Estilos y scripts -->
 </head>
 <body>
     <h1 style="text-align:center;text-decoration:underline">Bandeja de Entrada</h1>
 
-    <!--  TEXT BOX-->
+    <!-- Formulario de búsqueda -->
     <h3>Buscar Mail</h3>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="get" action="@Url.Action("BandejaDeEntrada", "Mail")">
-           <div class="input-group">
+        <div class="input-group">
             <input class="form-control" type="text" name="textToSearch" placeholder="Ingrese texto a buscar..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button type="submit" class="btn btn-primary" >Buscar</button>
-           </div>
-       </form>       
-       <hr />      
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <hr />
+
+    <!-- Tabla de correos -->
     <table class="table table-striped table-dark">
         <thead>
             <tr>
-
-                <th scope="col">Id</th> 
-                <th scope="col">Remitente</th> 
+                <th scope="col">Id</th>
+                <th scope="col">Remitente</th>
                 <th scope="col">Asunto</th>
                 <th scope="col">Contenido</th>
                 <th scope="col">Fecha</th>
@@ -38,18 +37,41 @@
         </thead>
         <tbody>
             @foreach (var mail in Model)
-               {                          
-            <tr>
-                <td>@mail.Id</td>
-                <td>@mail.Remitente_id</td>
-                <td>@mail.Asunto</td>
-                <td>@mail.Contenido</td>
-                <td>@mail.FechaEnvio</td>               
-            </tr>
+            {
+                <tr>
+                    <td>@mail.Id</td>
+                    <td>@mail.Remitente_id</td>
+                    <td>@mail.Asunto</td>
+                    <td>@mail.Contenido</td>
+                    <td>@mail.FechaEnvio</td>
+                </tr>
             }
         </tbody>
     </table>
 
-</body>
+    <!-- Paginación -->
+    <div class="pagination-container">
+        <div class="pagination">
+            Página @(Model.PageNumber) de @(Model.PageCount)
+        </div>
+        <div class="pagination">
+            @if (Model.HasPreviousPage)
+            {
+                <a href="@Url.Action("BandejaDeEntrada", new { page = Model.PageNumber - 1, textToSearch = ViewContext.HttpContext.Request.Query["textToSearch"] })">Anterior</a>
+            }
 
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <a href="@Url.Action("BandejaDeEntrada", new { page = i, textToSearch = ViewContext.HttpContext.Request.Query["textToSearch"] })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <a href="@Url.Action("BandejaDeEntrada", new { page = Model.PageNumber + 1, textToSearch = ViewContext.HttpContext.Request.Query["textToSearch"] })">Siguiente</a>
+            }
+        </div>
+    </div>
+
+    <!-- Scripts y cierre del body y html -->
+</body>
 </html>

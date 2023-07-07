@@ -14,8 +14,7 @@ namespace App.Core.Entities
         public int Remitente_id { get; set; }
 
         public DateTime FechaEnvio { get; set; }
-
-
+        
     }
 
     

@@ -2,6 +2,7 @@
 using App.Core.Business;
 using App.Core.Business.Services;
 using App.Core.Entities;
+using X.PagedList;
 
 namespace WebAppMvc.Controllers
 {
@@ -15,7 +16,7 @@ namespace WebAppMvc.Controllers
         public MailController(MailService mailService)
         {
             this.mailService = mailService;
-            this.userID = 1;
+            this.userID = 3;
         }
 
         public IActionResult Index()
@@ -25,24 +26,40 @@ namespace WebAppMvc.Controllers
         }
         //##################################################//
         //##### Bandeja de entrada #########################//
-        public IActionResult BandejaDeEntrada(string? textToSearch)
+        //public IActionResult BandejaDeEntrada(string? textToSearch)
+        //{
+        //    if (textToSearch is null)
+        //    {
+        //        var mails = mailService.GetEntradaById(userID);
+        //        return View(mails);               
+        //    }
+        //    else {
+        //        var mails = mailService.SearchString(textToSearch);
+        //        return View(mails);
+        //    }           
+
+        //}
+        public IActionResult BandejaDeEntrada(string? textToSearch, int page = 1, int pageSize = 5)
         {
+            IPagedList<Mail> pagedMails;
+
             if (textToSearch is null)
             {
                 var mails = mailService.GetEntradaById(userID);
-                return View(mails);               
+                pagedMails = mails.ToPagedList(page, pageSize);
             }
-            else {
+            else
+            {
                 var mails = mailService.SearchString(textToSearch);
-                return View(mails);
-            }           
+                pagedMails = mails.ToPagedList(page, pageSize);
+            }
 
+            return View(pagedMails);
         }
 
-
-        //##################################################//
-        //############## Elementos Enviados ################//
-        public IActionResult ElementosEnviados(string? textToSearch)
+            //##################################################//
+            //############## Elementos Enviados ################//
+            public IActionResult ElementosEnviados(string? textToSearch)
         {
             if (textToSearch is null)
             {

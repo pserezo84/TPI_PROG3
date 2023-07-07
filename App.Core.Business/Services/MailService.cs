@@ -1,6 +1,7 @@
 ﻿using App.Core.Business.Interfaces;
 using App.Core.Data;
 using App.Core.Entities;
+using X.PagedList;
 
 namespace App.Core.Business.Services
 {
@@ -31,6 +32,12 @@ namespace App.Core.Business.Services
         public IEnumerable<Mail> GetEntradaById(int userId) 
         {
             return _mailRepository.GetEntradaById(userId);
+        }
+
+        public IPagedList<Mail> GetEntradaById(int userId, int page = 1, int pageSize = 10)
+        {
+            var mails = _mailRepository.GetEntradaById(userId);
+            return mails.ToPagedList(page, pageSize);
         }
 
         //################################################################//
